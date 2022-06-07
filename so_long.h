@@ -6,7 +6,7 @@
 /*   By: cagonzal <cagonzal@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/05 14:54:08 by cagonzal          #+#    #+#             */
-/*   Updated: 2022/05/24 12:57:55 by cagonzal         ###   ########.fr       */
+/*   Updated: 2022/06/07 11:18:42 by cagonzal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,6 +58,7 @@ typedef struct s_wall_img
 	void	*down;
 	void	*down_left;
 	void	*left;
+	void	*floor;
 }	t_wall_img;
 
 /* Collectables animation info */
@@ -65,8 +66,6 @@ typedef struct s_coll_img
 {
 	void	*current_img;
 	int		anim_frames;
-	void	*img_0;
-	void	*img_1;
 }	t_collect_img;
 
 /* Info for the particle-like effect */
@@ -111,13 +110,13 @@ typedef enum e_enemytype
 typedef struct s_enemy_imgs
 {
 	int		basic_anim;
-	void	*basic_current;
-	void	*basic_01;
-	void	*basic_02;
+	void	*ver_current;
+	void	*hor_current;
+	void	*ver_imgs[2];
+	void	*hor_imgs[2];
 	int		follow_anim;
-	void	*follow_current;
-	void	*follow_01;
-	void	*follow_02;
+	void	*fol_current;
+	void	*fol_imgs[2];
 }	t_enemy_img;
 
 /* Struct to make a list of enemies */
@@ -143,17 +142,25 @@ enum e_keycode
 	ESC = 53
 };
 
+/* All valid input keys */
+enum e_directions
+{
+	NORTH = 0,
+	SOUTH = 1,
+	EAST = 2,
+	WEST = 3,
+};
+
 /* Info about the player */
 typedef struct s_player
 {
 	t_tile	*tile;
 	void	*current_img;
+	int		direction;
 	int		framecount;
 	int		idle_frames;
-	void	*idle_img_0;
-	void	*idle_img_1;
-	int		action_frames;
-	void	*action_img;
+	void	*anim_img[4];
+	void	*idle_img[4];
 }	t_player;
 
 /* All info for the game run */
@@ -193,7 +200,6 @@ void	render(t_game game);
 void	draw_wall(t_tile tile, t_game game, t_vector pos);
 
 void	effect_anim(t_effect *effect, t_vector pos);
-void	action_anim(t_player *player);
 
 void	remove_player(t_game *game);
 void	kill_player(t_game *game, t_vector pos);

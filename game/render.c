@@ -6,7 +6,7 @@
 /*   By: cagonzal <cagonzal@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/11 17:06:46 by cagonzal          #+#    #+#             */
-/*   Updated: 2022/05/24 12:19:55 by cagonzal         ###   ########.fr       */
+/*   Updated: 2022/06/06 11:19:36 by cagonzal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,8 +15,6 @@
 /* Draws the corresponding image of the tile type */
 static void	draw_image(t_tile tile, t_game game, t_vector pos)
 {
-	if (tile.type == WALL)
-		draw_wall(tile, game, pos);
 	if (tile.type == EXIT)
 	{
 		if (game.collects != 0)
@@ -34,7 +32,10 @@ static void	draw_image(t_tile tile, t_game game, t_vector pos)
 			game.player.current_img, pos.x, pos.y);
 	else if (tile.type == ENEMY)
 		mlx_put_image_to_window(game.mlx, game.window,
-			game.enemy_imgs.basic_current, pos.x, pos.y);
+			game.enemy_imgs.ver_current, pos.x, pos.y);
+	else if (tile.type == FOLLOWER)
+		mlx_put_image_to_window(game.mlx, game.window,
+			game.enemy_imgs.fol_current, pos.x, pos.y);
 }
 
 /* If the effect counter is less than its animation frames, draws it */
@@ -81,6 +82,7 @@ void	render(t_game game)
 		while (game.tilemap[y][x].type != 0)
 		{
 			tile = game.tilemap[y][x];
+			draw_wall(tile, game, tile.position);
 			draw_image(tile, game, tile.position);
 			draw_effect(game);
 			x++;

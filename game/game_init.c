@@ -6,7 +6,7 @@
 /*   By: cagonzal <cagonzal@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/11 11:35:55 by cagonzal          #+#    #+#             */
-/*   Updated: 2022/05/23 10:57:05 by cagonzal         ###   ########.fr       */
+/*   Updated: 2022/06/02 12:36:47 by cagonzal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,6 @@ void	game_init(t_game *game)
 static void	anim_setup(t_game *game)
 {
 	game->player.idle_frames = 17;
-	game->player.action_frames = 10;
 	game->collects_imgs.anim_frames = 25;
 	game->effect.frames = 7;
 	game->enemy_imgs.basic_anim = 16;

@@ -6,7 +6,7 @@
 /*   By: cagonzal <cagonzal@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/17 12:36:25 by cagonzal          #+#    #+#             */
-/*   Updated: 2022/05/17 12:36:26 by cagonzal         ###   ########.fr       */
+/*   Updated: 2022/06/06 11:58:11 by cagonzal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,8 @@
 
 t_bool	draw_corner(t_tile tile, t_game game, t_vector pos)
 {
+	mlx_put_image_to_window(game.mlx, game.window,
+		game.wall_imgs.floor, pos.x, pos.y);
 	if (tile.position.x == 0
 		&& tile.position.y == 0)
 		mlx_put_image_to_window(game.mlx, game.window,
@@ -37,6 +39,8 @@ t_bool	draw_corner(t_tile tile, t_game game, t_vector pos)
 
 t_bool	draw_sides(t_tile tile, t_game game, t_vector pos)
 {
+	mlx_put_image_to_window(game.mlx, game.window,
+		game.wall_imgs.floor, pos.x, pos.y);
 	if (tile.position.x == 0)
 		mlx_put_image_to_window(game.mlx, game.window,
 			game.wall_imgs.left, pos.x, pos.y);
@@ -54,6 +58,16 @@ t_bool	draw_sides(t_tile tile, t_game game, t_vector pos)
 	return (TRUE);
 }
 
+t_bool	draw_floor(t_tile tile, t_game game, t_vector pos)
+{
+	mlx_put_image_to_window(game.mlx, game.window,
+		game.wall_imgs.floor, pos.x, pos.y);
+	if (tile.type == WALL)
+		mlx_put_image_to_window(game.mlx, game.window,
+			game.wall_imgs.block, tile.position.x, tile.position.y);
+	return (TRUE);
+}
+
 /* Draws the corresponding sprite for the wall at <pos> */
 void	draw_wall(t_tile tile, t_game game, t_vector pos)
 {
@@ -61,6 +75,6 @@ void	draw_wall(t_tile tile, t_game game, t_vector pos)
 		return ;
 	else if (draw_sides(tile, game, pos))
 		return ;
-	mlx_put_image_to_window(game.mlx, game.window,
-		game.wall_imgs.block, pos.x, pos.y);
+	else if (draw_floor(tile, game, pos))
+		return ;
 }

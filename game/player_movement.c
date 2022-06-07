@@ -6,7 +6,7 @@
 /*   By: cagonzal <cagonzal@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/17 14:45:29 by cagonzal          #+#    #+#             */
-/*   Updated: 2022/05/23 10:49:13 by cagonzal         ###   ########.fr       */
+/*   Updated: 2022/06/07 11:18:22 by cagonzal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,6 @@ void	pick_collect(t_game *game, t_tile *tile)
 	tile->type = EMPTY;
 	game->collects--;
 	effect_anim(&game->effect, tile->position);
-	action_anim(&game->player);
 }
 
 void	move_to_exit(t_game *game, t_tile *tile)

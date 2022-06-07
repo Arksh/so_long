@@ -6,7 +6,7 @@
 /*   By: cagonzal <cagonzal@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/19 12:22:29 by cagonzal          #+#    #+#             */
-/*   Updated: 2022/05/19 12:22:30 by cagonzal         ###   ########.fr       */
+/*   Updated: 2022/06/07 11:12:04 by cagonzal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,10 @@ int	reset(t_game *game)
 		{
 			game->tilemap[y][x].type = game->tilemap[y][x].og_type;
 			if (game->tilemap[y][x].type == PLAYER)
+			{
 				game->player.tile = &game->tilemap[y][x];
+				game->player.direction = SOUTH;
+			}
 			x++;
 		}
 		y++;

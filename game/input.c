@@ -6,7 +6,7 @@
 /*   By: cagonzal <cagonzal@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/17 14:44:55 by cagonzal          #+#    #+#             */
-/*   Updated: 2022/05/24 12:10:47 by cagonzal         ###   ########.fr       */
+/*   Updated: 2022/06/07 11:13:51 by cagonzal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,16 +25,14 @@ void	effect_anim(t_effect *effect, t_vector pos)
 	effect->pos = pos;
 }
 
-/* Starts the action pose animation of the player */
-void	action_anim(t_player *player)
-{
-	player->framecount = 0;
-	player->current_img = player->action_img;
-}
-
 /* Move the player to <tile> doing whats needed based on its type */
-t_bool	move_to(t_game *game, t_tile *tile)
+t_bool	move_to(t_game *game, t_tile *tile, int dir)
 {
+	if (game->player.direction != dir)
+	{
+		game->player.direction = dir;
+		game->player.current_img = game->player.idle_img[dir];
+	}
 	if (tile->type == EMPTY)
 		move_to_empty(game, tile);
 	else if (tile->type == COLLECTABLE)
@@ -59,18 +57,16 @@ int	input(int key, t_game *game)
 
 	if (key == ESC)
 		end_program(game);
-	else if (key == RESET)
+	else if (key == RESET || game->player.tile == NULL)
 		return (reset(game));
-	if (game->player.tile == NULL)
-		end_program(game);
 	if (key == KEY_UP)
-		moved = move_to(game, game->player.tile->up);
+		moved = move_to(game, game->player.tile->up, NORTH);
 	else if (key == KEY_DOWN)
-		moved = move_to(game, game->player.tile->down);
+		moved = move_to(game, game->player.tile->down, SOUTH);
 	else if (key == KEY_LEFT)
-		moved = move_to(game, game->player.tile->left);
+		moved = move_to(game, game->player.tile->left, WEST);
 	else if (key == KEY_RIGHT)
-		moved = move_to(game, game->player.tile->right);
+		moved = move_to(game, game->player.tile->right, EAST);
 	else
 		return (0);
 	if (moved)
